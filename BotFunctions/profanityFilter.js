@@ -12,11 +12,15 @@ class profanityFilter {
       "wank",
       "wanker",
       "tosser",
+      "dick",
     ];
   }
 
   profanity(msg) {
-    let words = msg.split(" ");
+    const punctuationless = msg.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+    const finalString = punctuationless.replace(/\s{2,}/g," ");
+    let words = finalString.split(" ");
+    console.log(words);
     let swearing = false;
 
     this.prof.forEach((swear) => {

@@ -32,14 +32,16 @@ client.on("guildMemberAdd", (member) => {
 
 client.on("message", async (msg) => {
   try {
-    const swearing = filt.profanity(msg.content);
-    if (swearing) {
-      msg.reply("Please watch your language. It is not tolerated here!!");
-      msg.channel.send(
-        "https://tenor.com/view/watch-your-profanity-funny-gif-5600117"
-      );
-      msg.delete();
-      return;
+    if (msg.author != "Gaming Server Application") {
+      const swearing = filt.profanity(msg.content);
+      if (swearing) {
+        msg.reply("Please watch your language. It is not tolerated here!!");
+        msg.channel.send(
+          "https://tenor.com/view/watch-your-profanity-funny-gif-5600117"
+        );
+        msg.delete();
+        return;
+      }
     }
 
     if (msg.channel.id == "775468020712996875") {
