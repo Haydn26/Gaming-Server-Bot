@@ -17,10 +17,8 @@ class profanityFilter {
   }
 
   profanity(msg) {
-    const punctuationless = msg.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-    const finalString = punctuationless.replace(/\s{2,}/g," ");
-    let words = finalString.split(" ");
-    console.log(words);
+    const str = RemovePunc(msg);
+    const words = str.split(" ");
     let swearing = false;
 
     this.prof.forEach((swear) => {
@@ -37,3 +35,8 @@ class profanityFilter {
 }
 
 module.exports = profanityFilter;
+
+function RemovePunc(str){
+  const punctuationless = str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+  return punctuationless.replace(/\s{2,}/g," ");
+}

@@ -1,8 +1,8 @@
-const Fnc = require("./botFunctions/eightBall.js");
-const Jokes = require("./BotFunctions/dadJokes.js");
-const sInfo = require("./BotFunctions/senderInfo.js");
-const Filt = require("./BotFunctions/profanityFilter.js");
-const Meme = require("./BotFunctions/Memes.js");
+const Fnc = require("./BotFunctionsFactory/eightBall.js");
+const Jokes = require("./BotFunctionsFactory/dadJokes.js");
+const sInfo = require("./BotFunctionsFactory/senderInfo.js");
+const Filt = require("./BotFunctionsFactory/profanityFilter.js");
+const Meme = require("./BotFunctionsFactory/Memes.js");
 const { Client, MessageEmbed } = require("discord.js");
 
 const fnc = new Fnc();
