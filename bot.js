@@ -62,10 +62,12 @@ client.on("message", async (msg) => {
             "Get a new meme everytime (Provided by https://github.com/D3vd/Meme_Api/blob/master/README.md)"
           );
         msg.channel.send(embed);
+        return;
       }
 
       if (msg.content == "!dad-joke") {
         msg.reply(await jokes.joke());
+        return;
       }
 
       if (msg.content.startsWith("!user-info")) {
@@ -90,10 +92,12 @@ client.on("message", async (msg) => {
         }
 
         msg.reply(embed);
+        return;
       }
 
       if (msg.content.startsWith("!8-ball")) {
         msg.reply(fnc.response(msg.content));
+        return;
       }
 
       if (msg.content === "!stats") {
@@ -110,10 +114,12 @@ client.on("message", async (msg) => {
           .addField("Online Members", online)
           .addField("Offline Members", offline);
         msg.reply(Embed);
+        return;
       }
 
       if (msg.content === "!meme") {
         msg.channel.send(await meme.getMeme());
+        return;
       }
     }
   } catch (err) {

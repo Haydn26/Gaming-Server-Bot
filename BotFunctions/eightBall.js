@@ -25,7 +25,6 @@ class eightBall {
   }
 
   response(msg) {
-    console.log(msg);
     let question = msg.split(" ").splice(1, 0).join(" ");
     if (question == "!8-ball ") {
       return "Please ask a question";
