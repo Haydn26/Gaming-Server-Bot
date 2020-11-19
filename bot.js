@@ -1,16 +1,22 @@
-const Fnc = require("./BotFunctionsFactory/eightBall.js");
-const Jokes = require("./BotFunctionsFactory/dadJokes.js");
-const sInfo = require("./BotFunctionsFactory/senderInfo.js");
-const Filt = require("./BotFunctionsFactory/profanityFilter.js");
-const Meme = require("./BotFunctionsFactory/Memes.js");
+const Fnc = require("./BotFunctionsFactory/helpers/eightBall.js");
+const Jokes = require("./BotFunctionsFactory/helpers/dadJokes.js");
+const Filt = require("./BotFunctionsFactory/helpers/profanityFilter.js");
+const Meme = require("./BotFunctionsFactory/helpers/Memes.js");
+const LastM = require("./BotFunctionsFactory/helpers/CheckLastMessage.js");
+const MemberAdd = require("./BotFunctionsFactory/Actions/MemberAdd.js");
+const Help = require("./BotFunctionsFactory/Actions/Help.js")
+const UserInfo = require("./BotFunctionsFactory/Actions/UserInfo.js")
 const { Client, MessageEmbed } = require("discord.js");
 
+const client = new Client();
 const fnc = new Fnc();
 const jokes = new Jokes();
-const info = new sInfo();
 const filt = new Filt();
 const meme = new Meme();
-const client = new Client();
+const lastM = new LastM();
+const help = new Help(client, MessageEmbed);
+const memberAdd = new MemberAdd(client);
+const userInfo = new UserInfo(client, MessageEmbed);
 
 console.log("Initialising Gaming Server Bot");
 
@@ -23,16 +29,11 @@ client.on("ready", () => {
 });
 
 client.on("guildMemberAdd", (member) => {
-  const channel = member.guild.channels.cache.find(
-    (ch) => ch.name === "general"
-  );
-  if (!channel) return;
-  channel.send(`Welcome to the server, ${member}`);
+  memberAdd.welcomeMember(member)
 });
 
 client.on("message", async (msg) => {
   try {
-    if (msg.author != "Gaming Server Application") {
       const swearing = filt.profanity(msg.content);
       if (swearing) {
         msg.reply("Please watch your language. It is not tolerated here!!");
@@ -42,28 +43,21 @@ client.on("message", async (msg) => {
         msg.delete();
         return;
       }
-    }
+
+      // const channelID = msg.channel.id;
+      // const lastMessageID = msg.author.lastMessageID;
+      // const channel = client.channels.cache.find((channel) => channel.id === (channelID));
+      // console.log(channel.messages);
+      // const lastMessage = await channel.messages.cache.fetch(lastMessageID);
+      // const lastMessageTime = await lastMessage.createdTimestamp;
+
+      // if (lastM.spamming(msg.createdTimestamp, lastMessageTime)){
+
+      // }
 
     if (msg.channel.id == "775468020712996875") {
       if (msg.content == "!help") {
-        const embed = new MessageEmbed()
-          .setTitle("I see you need help")
-          .setColor(0xff0000)
-          .setDescription(
-            "I see you have seeked help from a young wise bot. Here are all the commands you are able to use. Please explore :)"
-          )
-          .addField(
-            "!8-ball",
-            "Seek all the answers to your questions! example: !8-ball Is this the best server you have ever seen"
-          )
-          .addField("!dad-joke", "Get the best dad joke you have seen today")
-          .addField("!user-info", "Get some of your basic discord info")
-          .addField("!stats", "Get guild stats")
-          .addField(
-            "!meme",
-            "Get a new meme everytime (Provided by https://github.com/D3vd/Meme_Api/blob/master/README.md)"
-          );
-        msg.channel.send(embed);
+        help.sendHelp(msg);
         return;
       }
 
@@ -73,27 +67,7 @@ client.on("message", async (msg) => {
       }
 
       if (msg.content.startsWith("!user-info")) {
-        const guildMembers = msg.channel.guild.members.cache;
-        const senderID = msg.author.id;
-        const guildInfo = guildMembers.get(senderID);
-        const userInfo = info.userInfo(guildInfo);
-
-        const embed = new MessageEmbed()
-          .setTitle("Info on you!")
-          .setColor(0xff0000)
-          .setDescription(
-            `Here is some information on your profile ${userInfo.Username}`
-          )
-          .addField("You joined", `${userInfo.Joined} days ago`)
-          .addField("Your Roles", `${userInfo.Roles}`);
-
-        if (!userInfo.Bot) {
-          embed.addField("Bot?", "Good news, your are not a bot!");
-        } else {
-          embed.addField("Bot?", "Beep, Boop! I am a bot");
-        }
-
-        msg.reply(embed);
+        userInfo.sendUserInfo(msg);
         return;
       }
 
