@@ -4,8 +4,9 @@ const Filt = require("./BotFunctionsFactory/helpers/profanityFilter.js");
 const Meme = require("./BotFunctionsFactory/helpers/Memes.js");
 const LastM = require("./BotFunctionsFactory/helpers/CheckLastMessage.js");
 const MemberAdd = require("./BotFunctionsFactory/Actions/MemberAdd.js");
-const Help = require("./BotFunctionsFactory/Actions/Help.js")
-const UserInfo = require("./BotFunctionsFactory/Actions/UserInfo.js")
+const Help = require("./BotFunctionsFactory/Actions/Help.js");
+const UserInfo = require("./BotFunctionsFactory/Actions/UserInfo.js");
+const GuildStats = require("./BotFunctionsFactory/Actions/GuildStats.js");
 const { Client, MessageEmbed } = require("discord.js");
 
 const client = new Client();
@@ -17,6 +18,7 @@ const lastM = new LastM();
 const help = new Help(client, MessageEmbed);
 const memberAdd = new MemberAdd(client);
 const userInfo = new UserInfo(client, MessageEmbed);
+const guildStats = new GuildStats(client, MessageEmbed);
 
 console.log("Initialising Gaming Server Bot");
 
@@ -77,19 +79,7 @@ client.on("message", async (msg) => {
       }
 
       if (msg.content === "!stats") {
-        const online = msg.guild.members.cache.filter(
-          (member) => member.presence.status !== "online"
-        ).size;
-
-        const offline = msg.guild.members.cache.filter(
-          (member) => member.presence.status == "offline"
-        ).size;
-
-        const Embed = new MessageEmbed()
-          .setTitle(`Server Stats`)
-          .addField("Online Members", online)
-          .addField("Offline Members", offline);
-        msg.reply(Embed);
+        guildStats.online(msg);
         return;
       }
 
