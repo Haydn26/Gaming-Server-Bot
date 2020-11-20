@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Fnc = require("./BotFunctionsFactory/helpers/eightBall.js");
 const Jokes = require("./BotFunctionsFactory/helpers/dadJokes.js");
 const Filt = require("./BotFunctionsFactory/helpers/profanityFilter.js");
@@ -19,10 +20,11 @@ const help = new Help(client, MessageEmbed);
 const memberAdd = new MemberAdd(client);
 const userInfo = new UserInfo(client, MessageEmbed);
 const guildStats = new GuildStats(client, MessageEmbed);
+const token = process.env.DISCORD_TOKEN;
 
 console.log("Initialising Gaming Server Bot");
 
-client.login("Nzc1NDM2MDkzMDU4NTgwNTAx.X6mTIw.GBcMcYM2z9eqb8Nd_aOztXOWxrE");
+client.login(token);
 
 client.on("ready", () => {
   client.channels.cache
