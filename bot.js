@@ -8,6 +8,7 @@ const MemberAdd = require("./BotFunctionsFactory/Actions/MemberAdd.js");
 const Help = require("./BotFunctionsFactory/Actions/Help.js");
 const UserInfo = require("./BotFunctionsFactory/Actions/UserInfo.js");
 const GuildStats = require("./BotFunctionsFactory/Actions/GuildStats.js");
+const Reddit = require("./BotFunctionsFactory/helpers/redditSearch.js");
 const { Client, MessageEmbed } = require("discord.js");
 
 const client = new Client();
@@ -16,6 +17,7 @@ const jokes = new Jokes();
 const filt = new Filt();
 const meme = new Meme();
 const lastM = new LastM();
+const reddit = new Reddit();
 const help = new Help(client, MessageEmbed);
 const memberAdd = new MemberAdd(client);
 const userInfo = new UserInfo(client, MessageEmbed);
@@ -33,31 +35,20 @@ client.on("ready", () => {
 });
 
 client.on("guildMemberAdd", (member) => {
-  memberAdd.welcomeMember(member)
+  memberAdd.welcomeMember(member);
 });
 
 client.on("message", async (msg) => {
   try {
-      const swearing = filt.profanity(msg.content);
-      if (swearing) {
-        msg.reply("Please watch your language. It is not tolerated here!!");
-        msg.channel.send(
-          "https://tenor.com/view/watch-your-profanity-funny-gif-5600117"
-        );
-        msg.delete();
-        return;
-      }
-
-      // const channelID = msg.channel.id;
-      // const lastMessageID = msg.author.lastMessageID;
-      // const channel = client.channels.cache.find((channel) => channel.id === (channelID));
-      // console.log(channel.messages);
-      // const lastMessage = await channel.messages.cache.fetch(lastMessageID);
-      // const lastMessageTime = await lastMessage.createdTimestamp;
-
-      // if (lastM.spamming(msg.createdTimestamp, lastMessageTime)){
-
-      // }
+    const swearing = filt.profanity(msg.content);
+    if (swearing) {
+      msg.reply("Please watch your language. It is not tolerated here!!");
+      msg.channel.send(
+        "https://tenor.com/view/watch-your-profanity-funny-gif-5600117"
+      );
+      msg.delete();
+      return;
+    }
 
     if (msg.channel.id == "775468020712996875") {
       if (msg.content == "!help") {
@@ -87,6 +78,26 @@ client.on("message", async (msg) => {
 
       if (msg.content === "!meme") {
         msg.channel.send(await meme.getMeme());
+        return;
+      }
+
+      if (msg.content.startsWith("!reddit")) {
+        let data;
+        const subReddit = msg.content.split(" ");
+
+        data =
+          subReddit.length > 1 && subReddit[1].startsWith("r/")
+            ? await reddit.getSubredditContent(subReddit[1])
+            : await reddit.getTopContent();
+
+          console.log(data.data.children[0].data.link_flair_richtext);
+
+        for (let i = 0; i < 5; i++) {
+          let postData = data.data.children[i];
+          const postEmbed = new MessageEmbed().setTitle(postData.data.title).setDescription(postData.data.link_flair_richtext);
+          msg.channel.send(postEmbed);
+        }
+
         return;
       }
     }
