@@ -1,19 +1,14 @@
-const Info = require("../helpers/senderInfo.js");
+const { MessageEmbed } = require("discord.js");
+const Info = require("./Helpers/senderInfo.js");
 const info = new Info();
 
-class UserInfo {
-    constructor(client, MessageEmbed){
-        this.client = client;
-        this.MessageEmbed = MessageEmbed;
-    }
-
-    sendUserInfo(msg){
-        const guildMembers = msg.channel.guild.members.cache;
+module.exports = function(msg){
+  const guildMembers = msg.channel.guild.members.cache;
         const senderID = msg.author.id;
         const guildUserInfo = guildMembers.get(senderID);
         const userInfo = info.userInfo(guildUserInfo);
 
-        const embed = new this.MessageEmbed()
+        const embed = new MessageEmbed()
           .setTitle("Info on you!")
           .setColor(0xff0000)
           .setDescription(
@@ -29,7 +24,4 @@ class UserInfo {
         }
 
         msg.reply(embed);
-    }
 }
-
-module.exports = UserInfo;

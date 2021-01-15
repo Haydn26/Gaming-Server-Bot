@@ -1,9 +1,6 @@
 const fetch = require("node-fetch");
 
-class dadJokes {
-  constructor() {}
-
-  async joke() {
+module.exports = async function (msg){
     const url = "https://icanhazdadjoke.com/";
     const options = {
       method: "GET",
@@ -15,8 +12,5 @@ class dadJokes {
     const response = await fetch(url, options);
     const jokeJson = await response.json();
 
-    return jokeJson.joke;
-  }
+    msg.reply(jokeJson.joke);
 }
-
-module.exports = dadJokes;
