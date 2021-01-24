@@ -1,26 +1,21 @@
-class senderInfo {
-    userInfo(guildInfo){
-        const name = guildInfo.user.username;
-        const joinedTime = parseTime(guildInfo.joinedTimestamp);
-        let roles = [];
-        for (let i = 0; i < guildInfo._roles.length; i++){
-            roles.push(guildInfo.guild.roles.cache.get(guildInfo._roles[i]).name);
-        }
-        const isBot = guildInfo.user.bot ? true : false;
-
-        const userData = {
-            Username: name,
-            Joined: joinedTime,
-            Roles: roles,
-            Bot: isBot
-        }
-
-        return userData;
+module.exports = function(guildInfo){
+    const name = guildInfo.user.username;
+    const joinedTime = parseTime(guildInfo.joinedTimestamp);
+    let roles = [];
+    for (let i = 0; i < guildInfo._roles.length; i++){
+        roles.push(guildInfo.guild.roles.cache.get(guildInfo._roles[i]).name);
     }
+    const isBot = guildInfo.user.bot ? true : false;
+
+    const userData = {
+        Username: name,
+        Joined: joinedTime,
+        Roles: roles,
+        Bot: isBot
+    }
+
+    return userData;
 }
-
-module.exports = senderInfo;
-
 
 function parseTime(timeStamp){
     const joinedDate = new Date(timeStamp);

@@ -1,12 +1,11 @@
 const { MessageEmbed } = require("discord.js");
 const Info = require("./Helpers/senderInfo.js");
-const info = new Info();
 
 module.exports = function(msg){
   const guildMembers = msg.channel.guild.members.cache;
         const senderID = msg.author.id;
         const guildUserInfo = guildMembers.get(senderID);
-        const userInfo = info.userInfo(guildUserInfo);
+        const userInfo = Info(guildUserInfo);
 
         const embed = new MessageEmbed()
           .setTitle("Info on you!")

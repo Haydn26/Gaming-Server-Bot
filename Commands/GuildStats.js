@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = function(msg){
   const online = msg.guild.members.cache.filter(
-    (member) => member.presence.status !== "online"
+    (member) => member.presence.status != "offline"
   ).size;
 
   const offline = msg.guild.members.cache.filter(
