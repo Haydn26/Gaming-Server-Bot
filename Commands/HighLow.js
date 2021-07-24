@@ -9,7 +9,7 @@ module.exports = function HighLow(msg) {
     if (!stillPlaying && content.length == 8) {
       stillPlaying = true;
       msg.reply(
-        "Welcome to high low! The rules are simple, just respond with !HighLow and your guess. For example '!HighLow lower', the numbers go from 1 - 13"
+        "Welcome to high low! The rules are simple, just respond with !highlow and your guess. For example '!highlow lower', the numbers go from 1 - 13"
       );
       numbers.push(randomNumber(numbers[numbers.length - 1]));
       msg.reply(

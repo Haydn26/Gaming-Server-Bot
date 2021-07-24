@@ -19,7 +19,7 @@ const commands = {
   reddit: Reddit,
   userinfo: UserInfo,
   stats: GuildStats,
-  HighLow: HighLow,
+  highlow: HighLow,
 };
 
 module.exports = function (msg) {
