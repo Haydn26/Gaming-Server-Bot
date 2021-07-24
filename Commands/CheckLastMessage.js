@@ -1,12 +1,11 @@
-class checkLastMessage {
-    spamming(thisMessageTime, LastMessageTime){
-        console.log(thisMessageTime);
-        console.log(LastMessageTime);
-    }
-}
+// class checkLastMessage {
+//     spamming(MessageTime, PrevMessageTime){
+//         console.log(MessageTime, prevMessageTime);
+//     }
+// }
 
-module.exports = checkLastMessage;
+// module.exports = checkLastMessage;
 
-function parseTime(time){
+// function parseTime(time){
     
-}
+// }

@@ -2,11 +2,12 @@ const Filt = require("./Commands/profanityFilter.js");
 const EightBall = require("./Commands/eightBall.js");
 const Jokes = require("./Commands/dadJokes.js");
 const Meme = require("./Commands/Memes.js");
-// const LastM = require("./Commands/CheckLastMessage.js");
+const LastM = require("./Commands/CheckLastMessage.js");
 const Help = require("./Commands/Help.js");
 const UserInfo = require("./Commands/UserInfo.js");
 const GuildStats = require("./Commands/GuildStats.js");
 const Reddit = require("./Commands/redditSearch.js");
+const HighLow = require("./Commands/HighLow.js");
 
 const filt = new Filt();
 
@@ -18,6 +19,7 @@ const commands = {
   reddit: Reddit,
   userinfo: UserInfo,
   stats: GuildStats,
+  HighLow: HighLow,
 };
 
 module.exports = function (msg) {
@@ -31,6 +33,9 @@ module.exports = function (msg) {
       msg.delete();
       return;
     }
+
+    //const userMessage = new LastM(msg);
+    //userMessage.spamming();
 
     if (msg.channel.id == "775468020712996875") {
       if (msg.content.startsWith("!")) {
